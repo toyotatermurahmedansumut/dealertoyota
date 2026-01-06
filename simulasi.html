@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Simulasi Kredit Mobil</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+}
+
+.box {
+  max-width: 420px;
+  background: white;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+h2 {
+  text-align: center;
+  color: #c4001a;
+}
+
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+}
+
+button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  background: #25D366;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>Simulasi Kredit Mobil</h2>
+
+  <label>Nama</label>
+  <input type="text" id="nama">
+
+  <label>Mobil</label>
+  <input type="text" id="mobil" placeholder="Avanza / Innova">
+
+  <label>Harga Mobil (Rp)</label>
+  <input type="number" id="harga">
+
+  <label>DP (%)</label>
+  <input type="number" id="dp" value="20">
+
+  <label>Tenor (bulan)</label>
+  <select id="tenor">
+    <option value="12">12</option>
+    <option value="24">24</option>
+    <option value="36">36</option>
+    <option value="48">48</option>
+    <option value="60">60</option>
+  </select>
+
+  <button onclick="kirimWA()">Kirim ke WhatsApp</button>
+</div>
+
+<script>
+function kirimWA() {
+  var nama = document.getElementById("nama").value;
+  var mobil = document.getElementById("mobil").value;
+  var harga = document.getElementById("harga").value;
+  var dpPersen = document.getElementById("dp").value;
+  var tenor = document.getElementById("tenor").value;
+
+  if (nama === "" || mobil === "" || harga === "") {
+    alert("Lengkapi semua data");
+    return;
+  }
+
+  var dp = harga * dpPersen / 100;
+  var pinjaman = harga - dp;
+  var angsuran = pinjaman / tenor;
+
+  var pesan =
+    "Halo, saya mau simulasi kredit mobil:%0A%0A" +
+    "Nama: " + nama + "%0A" +
+    "Mobil: " + mobil + "%0A" +
+    "Harga: Rp " + Number(harga).toLocaleString("id-ID") + "%0A" +
+    "DP (" + dpPersen + "%): Rp " + dp.toLocaleString("id-ID") + "%0A" +
+    "Tenor: " + tenor + " bulan%0A" +
+    "Estimasi angsuran: Rp " + angsuran.toFixed(0).toLocaleString("id-ID") + "/bulan";
+
+  var noWA = "6281263783110"; // GANTI NOMOR INI
+  var url = "https://wa.me/" + noWA + "?text=" + pesan;
+
+  window.open(url, "_blank");
+}
+</script>
+
+</body>
+</html>
